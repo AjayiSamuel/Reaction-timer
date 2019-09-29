@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Test your Reaction Time!</title>
+        <style type="text/css">
+        #timeParagraph{
+            font-weight: bold;
+            font-size: 115%;
+            /* color: bisque, royalblue, red, limegreen, orange, plum, black; */
+        }
+        .clear{
+            clear: both;
+        }
+        </style>
+    </head>
+
+    <body>
+        <h1>
+            Test your Reaction Time
+        </h1>
+
+        <p>Click on the boxes and circles as quickly as quickly as you can!</p>
+
+        <p id="timeParagraph">
+            Your Total Time: 
+            <span id="timeLapse"></span>, 
+            Your Time Per Clip  <span>
+            <span id="timePerClip"></span>
+        </p>
+
+        <div class="clear">
+
+        <div id="randomShape"></div> 
+
+        <script type="text/javascript">
+
+            function randomSize(){
+                var min = 90;
+                var max = 300;
+                var rand = Math.floor(Math.random() * (max - min)) + min;
+
+                var selectedSize = rand + "px";
+                console.log("The Selected Size is: " + selectedSize);
+
+                return (selectedSize);
+            }
+
+
+             function randomBackgroundColor (){
+                console.log("Random Function activated ")
+                var colorList = [ 
+                    "bisque", 
+                    "royalblue", 
+                    "red", 
+                    "limegreen", 
+                    "orange", 
+                    "plum", 
+                    "black",
+                    "brown",
+                    "grey"
+                ];
+                // var item = items[Math.floor(Math.random() * items.length)];
+
+                var number = Math.floor(Math.random() * colorList.length);
+                var selectedColor = colorList[number];
+                console.log("The Selected colour: " + selectedColor);
+                return (selectedColor);
+            }
+
+            function randomBorderRadius(){
+                var borderRadiusList = ['50%','0%'];
+                var number = Math.floor(Math.random() * borderRadiusList.length);
+                var selectedBR = borderRadiusList[number];
+                console.log("The Selected border-raduis is: " + selectedBR);
+                return (selectedBR);
+            }
+
+            function randomPositionLeft(){
+                var min = 20;
+                var max = 1500;
+                var rand = Math.floor(Math.random() * (max - min)) + min;
+
+                var selectedLenght = rand + "px";
+                console.log("The Selected lenght is: " + selectedLenght);
+
+                return (selectedLenght);
+
+            }
+
+            function randomPositionTop(){
+                var min = 10;
+                var max = 600;
+                var rand = Math.floor(Math.random() * (max - min)) + min;
+
+                var selectedLenght = rand + "px";
+                console.log("The Selected lenght is: " + selectedLenght);
+
+                return (selectedLenght);
+
+            }
+
+            document.getElementById("randomShape").style.height = "200px";
+            document.getElementById("randomShape").style.width = "200px";
+            document.getElementById("randomShape").style.backgroundColor = "pink";
+            document.getElementById("randomShape").style.borderRadius = "50%";
+            document.getElementById("randomShape").style.position = "relative";
+            document.getElementById("randomShape").style.left = "0px";
+            document.getElementById("randomShape").style.top = "0px";
+
+            var theTime = new Date;
+            var timeListOut = [theTime];
+
+
+            function timedifference(baseTime = theTime){
+                var newTime = new Date;
+                var Diff = newTime.getTime() - baseTime.getTime();
+                var timeDiff = Diff/1000;
+                var timeDiffAbs = Math.abs(timeDiff);
+                return (timeDiffAbs);
+            }
+
+            document.getElementById("randomShape").onclick = function(baseTime = theTime, timeList = timeListOut){
+                var clickTime = new Date;
+                timeList.push(clickTime);
+                number = timeList.length;
+                console.log("Time List number: " + number);
+
+                var firstClick = timeList[number-2];
+                var secondClick = timeList[number-1];
+                var diff = secondClick.getTime() - firstClick.getTime();
+                diff = diff / 1000;
+                var diffTime = Math.abs(diff);
+
+                var size = randomSize();
+                document.getElementById("randomShape").style.height = size;
+                document.getElementById("randomShape").style.width = size;
+                document.getElementById("randomShape").style.backgroundColor = randomBackgroundColor();
+                document.getElementById("randomShape").style.borderRadius = randomBorderRadius();
+                document.getElementById("randomShape").style.position = "absolute";
+                document.getElementById("randomShape").style.left = randomPositionLeft();
+                document.getElementById("randomShape").style.top = randomPositionTop();
+                document.getElementById("timeLapse").innerHTML = timedifference() + "Secs"; 
+                document.getElementById("timePerClip").innerHTML = diffTime + "Secs";
+            }
+        </script>
+    </body>
+</html>
